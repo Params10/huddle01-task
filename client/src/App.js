@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import Room from "./containers/Room";
-import Wallets from "./components/wallets";
 
 function App() {
   return (
