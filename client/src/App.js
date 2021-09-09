@@ -14,8 +14,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/room" component={Room} />
-        {/* <Route path="/" component={() => <Redirect to="/room" />} /> */}
-        <Route path="/wallets" component={Wallets} />
+      <Route path="/" component={() => <Redirect to="/room" />} /> 
       </Switch>
     </Router>
   );
