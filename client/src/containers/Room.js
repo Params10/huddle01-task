@@ -58,9 +58,7 @@ function Room() {
 
     }, []);
     useEffect(() => {
-        console.log("peers array ", peers);
         if (huddle) {
-            console.log(huddle);
             if (huddle._hostId) {
                 if (huddle._hostId != huddle._peerId) {
                     setIsHost(false);
@@ -69,9 +67,6 @@ function Room() {
         }
 
     }, [peers, huddle]);
-    useEffect(() => {
-        console.log("recaddress",recAddress);
-    },[recAddress]);
 
     //recording config
     useEffect(() => {
@@ -247,7 +242,6 @@ function Room() {
         try {
             setupEventListeners();
             await huddle.join();
-            console.log("post join", huddle);
             setBeginTime(new Date());
         } catch (error) {
             alert(error);
