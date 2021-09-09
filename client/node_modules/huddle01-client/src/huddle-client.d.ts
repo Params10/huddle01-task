@@ -1,0 +1,171 @@
+import * as mediasoupClient from "mediasoup-client";
+import { Peer } from "protoo-client";
+import emitter from "./utils/EventEmitter.js";
+
+export namespace HuddleTypes {
+
+    export interface IProducer extends mediasoupClient.types.Producer {
+        type?: string;
+    }
+
+    export interface IConsumer extends mediasoupClient.types.Consumer {
+        type?: string;
+    }
+
+    export interface IPeer extends Peer { }
+
+    export type HuddleClientConfig = {
+        roomId: string;
+        peerId: string;
+        apiKey: string;
+        displayName: string;
+        handlerName?: string;
+        useSimulcast?: boolean;
+        useSharingSimulcast?: boolean;
+        forceTcp?: boolean;
+        produce?: boolean;
+        consume?: boolean;
+        forceH264?: boolean;
+        forceVP9?: boolean;
+        svc?: any;
+        datachannel?: boolean;
+        externalVideo?: any;
+        isBot: boolean;
+        userToken?: string;
+        userPassword?: string;
+        window: Window;
+    }
+
+}
+
+export default class HuddleClient {
+    constructor({ roomId, peerId, apiKey, displayName, handlerName, useSimulcast, useSharingSimulcast, forceTcp, produce, consume, forceH264, forceVP9, svc, datachannel, externalVideo, isBot, userToken, userPassword, window }: HuddleTypes.HuddleClientConfig);
+    userPassword: string;
+    _window: Window;
+    userToken: string;
+    _peerId: string;
+    _roomId: string;
+    localStore: Map<any, any>;
+    peers: any;
+    _closed: boolean;
+    _displayName: string;
+    _device: {
+        flag: string;
+        name: any;
+        version: any;
+    };
+    _forceTcp: boolean;
+    _produce: boolean;
+    _consume: boolean;
+    _useDataChannel: boolean;
+    _forceH264: boolean;
+    _forceVP9: boolean;
+    _externalVideo: HTMLVideoElement;
+    _externalVideoStream: MediaStream;
+    _nextDataChannelTestNumber: number;
+    _isBot: boolean;
+    _handlerName: string;
+    _useSimulcast: boolean;
+    _useSharingSimulcast: boolean;
+    _protooUrl: string;
+    apiKey: string;
+    _protoo: Peer;
+    _mediasoupDevice: mediasoupClient.types.Device;
+    _sendTransport: mediasoupClient.types.Transport;
+    _recvTransport: mediasoupClient.types.Transport;
+    _micProducer: mediasoupClient.types.Producer;
+    _webcamProducer: mediasoupClient.types.Producer;
+    _shareProducer: mediasoupClient.types.Producer;
+    _chatDataProducer: mediasoupClient.types.DataProducer;
+    _miscDataProducer: mediasoupClient.types.DataProducer;
+    _reactionsDataProducer: mediasoupClient.types.DataProducer;
+    _miroDataProducer: mediasoupClient.types.DataProducer;
+    _raiseHandDataProducer: mediasoupClient.types.DataProducer;
+    _botDataProducer: mediasoupClient.types.DataProducer;
+    _consumers: Map<String, mediasoupClient.types.Consumer>;
+    _dataConsumers: Map<String, mediasoupClient.types.DataConsumer>;
+    _webcams: Map<String, MediaDeviceInfo>;
+    _webcam: {
+        device: MediaDeviceInfo;
+        resolution: string;
+    };
+    _setLocalState(name: any, value: any): Map<any, any>;
+    _getLocalState(name: any): any;
+    close(denied?: boolean): void;
+    join(): Promise<void>;
+    allowLobbyPeerToJoinRoom(peerIdToAdmit: any): Promise<void>;
+    disallowLobbyPeerFromJoiningRoom(peerIdToDisallow: any): Promise<void>;
+    sendDM(message: any, toId: any): Promise<void>;
+    enableMic(): Promise<void>;
+    disableMic(): Promise<void>;
+    muteMic(): Promise<void>;
+    unmuteMic(): Promise<void>;
+    enableWebcam(): Promise<void>;
+    disableWebcam(): Promise<void>;
+    pauseVideo(): Promise<void>;
+    resumeVideo(): Promise<void>;
+    changeWebcam(): Promise<void>;
+    changeWebcamResolution(): Promise<void>;
+    enableShare(): Promise<boolean | undefined>;
+    disableShare(): Promise<void>;
+    enableAudioOnly(): Promise<void>;
+    disableAudioOnly(): Promise<void>;
+    muteAudio(): Promise<void>;
+    unmuteAudio(): Promise<void>;
+    restartIce(): Promise<void>;
+    setMaxSendingSpatialLayer(spatialLayer: any): Promise<void>;
+    setConsumerPreferredLayers(consumerId: any, spatialLayer: any, temporalLayer: any): Promise<void>;
+    setConsumerPriority(consumerId: any, priority: any): Promise<void>;
+    requestConsumerKeyFrame(consumerId: any): Promise<void>;
+    enableRaiseHandDataProducer(): Promise<void>;
+    enableReactionsDataProducer(): Promise<void>;
+    enableMiroDataProducer(): Promise<void>;
+    enableMiscDataProducer(): Promise<void>;
+    enableChatDataProducer(): Promise<void>;
+    enableBotDataProducer(): Promise<void>;
+    raiseHand(booleanInString: any): Promise<void>;
+    sendReaction(reaction: any): Promise<void>;
+    sendMiro(boardId: any): Promise<void>;
+    sendMiscMessages(text: any): Promise<void>;
+    sendChatMessage(text: any): Promise<void>;
+    sendBotMessage(text: any): Promise<void>;
+    disablePeerProducer(producerType: any, peerIdOrIds: any): Promise<void>;
+    kickPeerFromRoom(peerIdToKick: any): Promise<void>;
+    closeRoomForAll(): Promise<void>;
+    makeACoHost(peerId: any): Promise<void>;
+    startRecording(): Promise<boolean>;
+    stopRecording(): Promise<boolean>;
+    emailRecordingUrl(to: any, url: any): Promise<void>;
+    toggleRoomLock(_bool: any): Promise<void>;
+    changeDisplayName(displayName: any): Promise<void>;
+    getSendTransportRemoteStats(): Promise<any>;
+    getRecvTransportRemoteStats(): Promise<any>;
+    getAudioRemoteStats(): Promise<any>;
+    getVideoRemoteStats(): Promise<any>;
+    getConsumerRemoteStats(consumerId: any): Promise<any>;
+    getChatDataProducerRemoteStats(): Promise<any>;
+    getBotDataProducerRemoteStats(): Promise<any>;
+    getDataConsumerRemoteStats(dataConsumerId: any): Promise<any>;
+    getSendTransportLocalStats(): Promise<RTCStatsReport | undefined>;
+    getRecvTransportLocalStats(): Promise<RTCStatsReport | undefined>;
+    getAudioLocalStats(): Promise<RTCStatsReport | undefined>;
+    getVideoLocalStats(): Promise<RTCStatsReport | undefined>;
+    getConsumerLocalStats(consumerId: any): Promise<any>;
+    applyNetworkThrottle({ uplink, downlink, rtt, secret }: {
+        uplink: any;
+        downlink: any;
+        rtt: any;
+        secret: any;
+    }): Promise<void>;
+    resetNetworkThrottle({ silent, secret }: {
+        silent?: boolean;
+        secret: any;
+    }): Promise<void>;
+    _joinRoom(): Promise<void>;
+    _updateWebcams(): Promise<void>;
+    _getWebcamType(device: any): "back" | "front";
+    _pauseConsumer(consumer: any): Promise<void>;
+    _resumeConsumer(consumer: any): Promise<void>;
+    _getExternalVideoStream(): Promise<any>;
+}
+export { emitter };
