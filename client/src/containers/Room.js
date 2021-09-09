@@ -106,7 +106,7 @@ function Room() {
             console.log("new prod", producer);
             switch (producer.type) {
                 case "webcam":
-                    let videoStream = producer.track;
+                    const videoStream = producer.track;
                     if (typeof videoStream == "object") {
                         try {
                             meVideoElem.current.srcObject = getTrack(videoStream);
@@ -119,10 +119,10 @@ function Room() {
                     //do whatever
                     break;
                 case "screen":
-                    videoStream = producer.track;
-                    if (typeof videoStream == "object") {
+                   const screenStream = producer.track;
+                    if (typeof screenStream == "object") {
                         try {
-                            meScreenElem.current.srcObject = getTrack(videoStream);
+                            meScreenElem.current.srcObject = getTrack(screenStream);
                         } catch (error) {
                             console.error(error);
                         }
