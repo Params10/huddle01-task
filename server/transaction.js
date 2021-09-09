@@ -52,7 +52,7 @@ app.post('/transactions', async (req, res) => {
   console.log(req.body);
   let timeDifference = req.body.timediff;
   
-let multiples = timeDifference/30;
+let multiples = parseInt(timeDifference/30);
 console.log("multiples",multiples);
 if(multiples>0)
 {
